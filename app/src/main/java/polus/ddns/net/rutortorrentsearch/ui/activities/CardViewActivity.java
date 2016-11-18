@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import butterknife.BindView;
 import polus.ddns.net.rutortorrentsearch.R;
 import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
 
@@ -14,8 +15,11 @@ import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
 
 public class CardViewActivity extends Activity {
     static final String TAG = ConstantManager.TAG_PREFIX + "CardViewActivity";
+    @BindView(R.id.card_name)
     TextView cardName;
+    @BindView(R.id.card_size)
     TextView cardSize;
+    @BindView(R.id.card_seeders)
     TextView cardSeeders;
 
     @Override
@@ -23,9 +27,5 @@ public class CardViewActivity extends Activity {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cardview_activity);
-        cardName = (TextView)findViewById(R.id.card_name);
-        cardSize = (TextView)findViewById(R.id.card_size);
-        cardSeeders = (TextView)findViewById(R.id.card_seeders);
-
     }
 }
