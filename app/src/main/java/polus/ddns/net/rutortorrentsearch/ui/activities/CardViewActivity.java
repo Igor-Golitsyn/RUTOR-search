@@ -27,5 +27,6 @@ public class CardViewActivity extends Activity {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cardview_activity);
+
     }
 }

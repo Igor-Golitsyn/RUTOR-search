@@ -6,7 +6,10 @@ package polus.ddns.net.rutortorrentsearch.utils;
 
 public interface ConstantManager {
     String TAG_PREFIX = "RUTOR ";
-    String ADRESS = "http://rutor.info/s/logo.jpg";
+    String LOGO_URI = "http://rutor.info/s/logo.jpg";
     String SITE_LIST = "SITE_LIST";
-    String RUTOR_LOGO = "RUTOR_LOGO";
+    String ENTRY_LINK = "ENTRY_LINK";
+    String ENTRY_IMAGE_LINK="ENTRY_IMAGE_LINK";
+    String ENTRY = "ENTRY";
+    int REQUEST_URI_FOR_IMAGE_TORRENT = 99;
 }

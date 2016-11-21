@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.BindView;
 import polus.ddns.net.rutortorrentsearch.R;
 import polus.ddns.net.rutortorrentsearch.data.vo.EntrysFromSite;
 import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
@@ -23,18 +22,18 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.EntryViewHolder> {
 
     public static class EntryViewHolder extends RecyclerView.ViewHolder {
         static final String TAG = ConstantManager.TAG_PREFIX + "EntryViewHolder";
-        @BindView(R.id.card_view)
         CardView cardView;
-        @BindView(R.id.card_name)
         TextView cardName;
-        @BindView(R.id.card_size)
         TextView cardSize;
-        @BindView(R.id.card_seeders)
         TextView cardSeeders;
 
         EntryViewHolder(View itemView) {
             super(itemView);
             Log.d(TAG, "onCreateEntryViewHolder");
+            cardView = (CardView) itemView.findViewById(R.id.card_view);
+            cardName = (TextView) itemView.findViewById(R.id.card_name);
+            cardSize = (TextView) itemView.findViewById(R.id.card_size);
+            cardSeeders = (TextView) itemView.findViewById(R.id.card_seeders);
         }
     }
 

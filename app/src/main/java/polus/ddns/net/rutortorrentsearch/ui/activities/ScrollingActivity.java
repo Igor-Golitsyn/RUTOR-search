@@ -1,11 +1,14 @@
 package polus.ddns.net.rutortorrentsearch.ui.activities;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,10 +27,12 @@ import polus.ddns.net.rutortorrentsearch.R;
 import polus.ddns.net.rutortorrentsearch.data.model.RutorStrategy;
 import polus.ddns.net.rutortorrentsearch.data.vo.EntrysFromSite;
 import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
+import polus.ddns.net.rutortorrentsearch.utils.RecyclerItemClickListener;
 
 public class ScrollingActivity extends BaseActivity {
     static final String TAG = ConstantManager.TAG_PREFIX + "ScrollingActivity";
     private List<EntrysFromSite> siteList;
+    private View vi;
     @BindView(R.id.rutor_logo)
     ImageView rutorLogo;
     @BindView(R.id.find_button)
@@ -56,8 +61,23 @@ public class ScrollingActivity extends BaseActivity {
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Log.d(TAG, "onItemClick");
+                vi=view;
+                Intent intent = new Intent(ScrollingActivity.this, EntryActivity.class);
+                intent.putExtra(ConstantManager.ENTRY_LINK, siteList.get(position).getUri());
+                startActivityForResult(intent, ConstantManager.REQUEST_URI_FOR_IMAGE_TORRENT);
+            }
 
-        Picasso.with(this).load(ConstantManager.ADRESS).fit().into(rutorLogo);
+            @Override
+            public void onLongItemClick(View view, int position) {
+                Log.d(TAG, "onLongItemClick");
+                // do whatever
+            }
+        }));
+        Picasso.with(this).load(ConstantManager.LOGO_URI).fit().into(rutorLogo);
         if (savedInstanceState == null) {
             siteList = new ArrayList<>();
         } else {
@@ -81,7 +101,21 @@ public class ScrollingActivity extends BaseActivity {
         initializeAdapter();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult" + " " + requestCode + " " + resultCode);
+        switch (requestCode) {
+            case ConstantManager.REQUEST_URI_FOR_IMAGE_TORRENT:
+                if (resultCode == RESULT_OK){
+                    vi.setBackgroundColor(Color.GRAY);
+                    System.out.println(data.getSerializableExtra(ConstantManager.ENTRY_IMAGE_LINK));
+                }
+                break;
+        }
+    }
+
     private void initializeAdapter() {
+        Log.d(TAG, "initializeAdapter");
         RVAdapter adapter = new RVAdapter(siteList);
         recyclerView.setAdapter(adapter);
     }

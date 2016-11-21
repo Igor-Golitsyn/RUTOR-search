@@ -32,7 +32,7 @@ public class RutorStrategy implements Strategy {
         List<EntrysFromSite> siteList = new ArrayList<>();
         searchString = searchString.replaceAll(" ", "%20");
         while (true) {
-            Document document = null;
+            Document document;
             int oldSize = elements.size();
             try {
                 document = getDocument(searchString, i++);
@@ -54,7 +54,8 @@ public class RutorStrategy implements Strategy {
                 String seed = element.getElementsByClass("green").get(0).text();
                 seed = seed.substring(1, seed.length());
                 int seeders = Integer.parseInt(seed);
-                if (seeders > 0) siteList.add(new EntrysFromSite(date, name, size, seeders, uri));
+                EntrysFromSite entrysFromSite = new EntrysFromSite(date, name, size, seeders, uri);
+                if (seeders > 0) siteList.add(entrysFromSite);
             } catch (Exception e) {
             }
         }
