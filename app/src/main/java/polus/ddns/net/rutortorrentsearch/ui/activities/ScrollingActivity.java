@@ -65,7 +65,7 @@ public class ScrollingActivity extends BaseActivity {
             @Override
             public void onItemClick(View view, int position) {
                 Log.d(TAG, "onItemClick");
-                vi=view;
+                vi = view;
                 Intent intent = new Intent(ScrollingActivity.this, EntryActivity.class);
                 intent.putExtra(ConstantManager.ENTRY_LINK, siteList.get(position).getUri());
                 startActivityForResult(intent, ConstantManager.REQUEST_URI_FOR_IMAGE_TORRENT);
@@ -106,9 +106,8 @@ public class ScrollingActivity extends BaseActivity {
         Log.d(TAG, "onActivityResult" + " " + requestCode + " " + resultCode);
         switch (requestCode) {
             case ConstantManager.REQUEST_URI_FOR_IMAGE_TORRENT:
-                if (resultCode == RESULT_OK){
-                    vi.setBackgroundColor(Color.GRAY);
-                    System.out.println(data.getSerializableExtra(ConstantManager.ENTRY_IMAGE_LINK));
+                if (resultCode == RESULT_OK) {
+                    vi.setBackgroundColor(Color.parseColor("#DBDBDB"));
                 }
                 break;
         }
