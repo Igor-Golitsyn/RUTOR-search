@@ -25,4 +25,11 @@
     <!-- Images -->
     <dimen name="profile_image_size_150">150dp</dimen>
 
+    <!--Padding-->
+    <dimen name="padding_small">16dp</dimen>
+    <dimen name="padding_normal">32dp</dimen>
+    <dimen name="padding_medial">56dp</dimen>
+    <dimen name="padding_medium">72dp</dimen>
+    <dimen name="padding_large">96dp</dimen>
+
 </resources>
