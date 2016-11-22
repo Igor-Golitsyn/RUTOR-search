@@ -34,7 +34,6 @@ import polus.ddns.net.rutortorrentsearch.utils.RecyclerItemClickListener;
 public class ScrollingActivity extends BaseActivity {
     static final String TAG = ConstantManager.TAG_PREFIX + "ScrollingActivity";
     private List<EntrysFromSite> siteList;
-    private View vi;
     @BindView(R.id.rutor_logo)
     ImageView rutorLogo;
     @BindView(R.id.find_button)
@@ -67,10 +66,10 @@ public class ScrollingActivity extends BaseActivity {
             @Override
             public void onItemClick(View view, int position) {
                 Log.d(TAG, "onItemClick");
-                vi = view;
                 Intent intent = new Intent(ScrollingActivity.this, EntryActivity.class);
                 intent.putExtra(ConstantManager.ENTRY_LINK, siteList.get(position).getUri());
-                startActivityForResult(intent, ConstantManager.REQUEST_URI_FOR_IMAGE_TORRENT);
+                view.setBackgroundColor(Color.parseColor("#DBDBDB"));
+                startActivity(intent);
             }
 
             @Override
@@ -103,18 +102,6 @@ public class ScrollingActivity extends BaseActivity {
         siteList.addAll(rutor.getEntrysFromSite(editText.getText().toString()));
         showToast("Найдено: " + siteList.size());
         initializeAdapter();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "onActivityResult" + " " + requestCode + " " + resultCode);
-        switch (requestCode) {
-            case ConstantManager.REQUEST_URI_FOR_IMAGE_TORRENT:
-                if (resultCode == RESULT_OK) {
-                    vi.setBackgroundColor(Color.parseColor("#DBDBDB"));
-                }
-                break;
-        }
     }
 
     private void initializeAdapter() {

@@ -11,8 +11,10 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import polus.ddns.net.rutortorrentsearch.data.vo.EntryTorrent;
 import polus.ddns.net.rutortorrentsearch.data.vo.EntrysFromSite;
@@ -27,7 +29,7 @@ public class RutorStrategy implements Strategy {
     private static final String URL_FORMAT = "http://rutor.info/search/%d/0/000/0/%s";
 
     public List<EntrysFromSite> getEntrysFromSite(String searchString) {
-        Log.d(TAG, "getEntrysFromSite " + searchString);
+        Log.d(TAG, "getEntrysFromSite");
         int i = 0;
         List<Element> elements = new ArrayList<>();
         List<EntrysFromSite> siteList = new ArrayList<>();
@@ -44,7 +46,6 @@ public class RutorStrategy implements Strategy {
             }
             if (oldSize == elements.size()) break;
         }
-
         for (Element element : elements) {
             try {
                 int sizeNode = element.childNodeSize();
@@ -71,14 +72,8 @@ public class RutorStrategy implements Strategy {
         return siteList;
     }
 
-    @Override
-    public EntryTorrent getEntryFromUri(URI uri) throws IOException {
-        Document document = Jsoup.connect(uri.toString()).userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36").referrer("http://www.google.com").get();
-        Element details = document.getElementById("details") ;
-        return null;
-    }
-
     private Document getDocument(String searchString, int page) throws IOException {
+        Log.d(TAG, "getDocument");
         String url = URI.create(String.format(Locale.getDefault(), URL_FORMAT, page, searchString)).toASCIIString();
         Document document = null;
         try {
@@ -87,5 +82,74 @@ public class RutorStrategy implements Strategy {
         } catch (IOException e) {
         }
         return document;
+    }
+
+    public EntryTorrent getEntryFromUri(URI mainUri) throws IOException {
+        Log.d(TAG, "getEntryFromUri" + "-----------" + mainUri);
+        EntryTorrent entryTorrent = new EntryTorrent();
+        Document document = Jsoup.connect(mainUri.toString()).userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36").referrer("http://www.google.com").get();
+        Element details = document.getElementById("details");
+        Element download = document.getElementById("download");
+        entryTorrent.setImageUri(getImageUri(details));
+        entryTorrent.setText(getText(details));
+        entryTorrent.setLinkTorrent(getUriTorrentFile(download));
+        return entryTorrent;
+    }
+
+    private URI getImageUri(Element details) {
+        Log.d(TAG, "getImageUri");
+        List<Element> elementList = details.getElementsByAttribute("src");
+        try {
+            return URI.create(elementList.get(1).absUrl("src"));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private String getText(Element details) {
+        Log.d(TAG, "getText");
+        List<Element> elementList = details.getElementsByTag("b");
+        Map<String, String> data = new HashMap<>();
+        StringBuilder rezult = new StringBuilder();
+        for (Element element : elementList) {
+            try {
+                String key = element.text();
+                String value = "";
+                String[] parts = details.toString().split(element.toString());
+                if (parts.length > 1) {
+                    String[] subPart = parts[1].split("\\<br\\>", 2);
+                    value = subPart[0];
+                }
+                if (value == null || value.isEmpty() || value.contains("http") || value.contains("href")) {
+                    continue;
+                }
+                if (key != null) data.put(key, clearFromTag(value));
+            } catch (Exception e) {
+            }
+        }
+        for (String s : data.keySet()) {
+            rezult = rezult.append(s + data.get(s) + "\n");
+        }
+        return rezult.toString();
+    }
+
+    private String clearFromTag(String string) {
+        Log.d(TAG, "clearFromTag");
+        string = string.trim();
+        if (!string.contains("<")) return string;
+        if (string.startsWith("<") && string.endsWith(">")) return "";
+        while (string.contains("<")) {
+            String[] parts = string.split("\\<", 2);
+            if (parts.length > 1) {
+                String[] subParts = parts[1].split("\\>", 2);
+                string = parts[0] + subParts[1];
+            }
+        }
+        return string;
+    }
+
+    private URI getUriTorrentFile(Element element) {
+        Log.d(TAG, "getUriTorrentFile");
+        return URI.create(element.child(1).absUrl("href"));
     }
 }

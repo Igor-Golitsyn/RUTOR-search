@@ -1,20 +1,26 @@
 package polus.ddns.net.rutortorrentsearch.ui.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
 import java.net.URI;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import polus.ddns.net.rutortorrentsearch.R;
+import polus.ddns.net.rutortorrentsearch.data.model.RutorStrategy;
+import polus.ddns.net.rutortorrentsearch.data.model.Strategy;
 import polus.ddns.net.rutortorrentsearch.data.vo.EntryTorrent;
 import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
 
@@ -26,14 +32,13 @@ public class EntryActivity extends BaseActivity {
     static final String TAG = ConstantManager.TAG_PREFIX + "EntryActivity";
     private EntryTorrent entryTorrent;
     private URI uri;
+    private Strategy rutor = new RutorStrategy();
     @BindView(R.id.torrent_image)
     ImageView torrentImage;
     @BindView(R.id.torrent_text)
     TextView torrentText;
     @BindView(R.id.torrent_button)
     Button torrentButton;
-    @BindView(R.id.web_wiew)
-    WebView webView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,15 +54,24 @@ public class EntryActivity extends BaseActivity {
         if (savedInstanceState == null) {
             Intent intent = getIntent();
             uri = (URI) intent.getSerializableExtra(ConstantManager.ENTRY_LINK);
+            try {
+                entryTorrent = rutor.getEntryFromUri(uri);
+            } catch (IOException e) {
+                showToast("Не удалось подключиться к серверу.");
+                finish();
+            }
         } else {
             uri = (URI) savedInstanceState.getSerializable(ConstantManager.ENTRY_LINK);
             entryTorrent = (EntryTorrent) savedInstanceState.getSerializable(ConstantManager.ENTRY);
         }
-        try {
-            webView.loadUrl(uri.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (entryTorrent.getImageUri() == null) {
+            entryTorrent.setImageUri(URI.create(ConstantManager.LOGO_URI));
         }
+        if (entryTorrent.getText() == null) {
+            entryTorrent.setText("");
+        }
+        Picasso.with(this).load(entryTorrent.getImageUri().toString()).resize(480, 800).centerCrop().into(torrentImage);
+        torrentText.setText(entryTorrent.getText());
     }
 
     @Override
@@ -72,7 +86,6 @@ public class EntryActivity extends BaseActivity {
     public void onBackPressed() {
         Log.d(TAG, "onBackPressed");
         Intent intent = new Intent();
-        //intent.putExtra(ConstantManager.ENTRY_IMAGE_LINK, (Serializable) entryTorrent.getImageUri());
         if (entryTorrent == null || entryTorrent.getImageUri() == null) {
             intent.putExtra(ConstantManager.ENTRY_IMAGE_LINK, URI.create(ConstantManager.LOGO_URI));
         } else {
@@ -80,5 +93,12 @@ public class EntryActivity extends BaseActivity {
         }
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    @OnClick(R.id.torrent_button)
+    public void clickTorrentButton() {
+        Log.d(TAG, "clickTorrentButton");
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(entryTorrent.getLinkTorrent().toString()));
+        startActivity(intent);
     }
 }
