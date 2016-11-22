@@ -11,8 +11,11 @@
     <ImageView
         android:id="@+id/torrent_image"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/torrent_image_size_256"/>
-
+        android:layout_height="wrap_content"/>
+<WebView
+    android:id="@+id/web_wiew"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"></WebView>
     <TextView
         android:id="@+id/torrent_text"
         android:layout_width="match_parent"

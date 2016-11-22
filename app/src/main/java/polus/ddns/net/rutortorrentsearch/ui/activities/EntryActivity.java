@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import java.net.URI;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import polus.ddns.net.rutortorrentsearch.R;
 import polus.ddns.net.rutortorrentsearch.data.vo.EntryTorrent;
 import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
@@ -30,6 +32,8 @@ public class EntryActivity extends BaseActivity {
     TextView torrentText;
     @BindView(R.id.torrent_button)
     Button torrentButton;
+    @BindView(R.id.web_wiew)
+    WebView webView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class EntryActivity extends BaseActivity {
         StrictMode.setThreadPolicy(policy);
 
         setContentView(R.layout.entry_activity);
+        ButterKnife.bind(this);
 
         if (savedInstanceState == null) {
             Intent intent = getIntent();
@@ -47,6 +52,11 @@ public class EntryActivity extends BaseActivity {
         } else {
             uri = (URI) savedInstanceState.getSerializable(ConstantManager.ENTRY_LINK);
             entryTorrent = (EntryTorrent) savedInstanceState.getSerializable(ConstantManager.ENTRY);
+        }
+        try {
+            webView.loadUrl(uri.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

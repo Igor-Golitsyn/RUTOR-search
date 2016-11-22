@@ -3,6 +3,7 @@ package polus.ddns.net.rutortorrentsearch.ui.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import polus.ddns.net.rutortorrentsearch.R;
 import polus.ddns.net.rutortorrentsearch.data.model.RutorStrategy;
+import polus.ddns.net.rutortorrentsearch.data.model.Strategy;
 import polus.ddns.net.rutortorrentsearch.data.vo.EntrysFromSite;
 import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
 import polus.ddns.net.rutortorrentsearch.utils.RecyclerItemClickListener;
@@ -96,7 +98,9 @@ public class ScrollingActivity extends BaseActivity {
     @OnClick(R.id.find_button)
     public void clickFindButton() {
         Log.d(TAG, "clickFindButton");
-        siteList = new RutorStrategy().getEntrysFromSite(editText.getText().toString());
+        Strategy rutor = new RutorStrategy();
+        siteList = new ArrayList<>();
+        siteList.addAll(rutor.getEntrysFromSite(editText.getText().toString()));
         showToast("Найдено: " + siteList.size());
         initializeAdapter();
     }
@@ -117,5 +121,15 @@ public class ScrollingActivity extends BaseActivity {
         Log.d(TAG, "initializeAdapter");
         RVAdapter adapter = new RVAdapter(siteList);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void runWithDelay() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showProgress();
+            }
+        }, 1000);
     }
 }

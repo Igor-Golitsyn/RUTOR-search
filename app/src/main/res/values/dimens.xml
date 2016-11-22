@@ -22,6 +22,7 @@
     <dimen name="button_height_tall_60">60dp</dimen>
     <dimen name="button_height_normal_40">40dp</dimen>
     <dimen name="button_height_short_32">32dp</dimen>
+    <!-- Images -->
     <dimen name="profile_image_size_150">150dp</dimen>
     <dimen name="torrent_image_size_256">256dp</dimen>
 

@@ -1,7 +1,10 @@
 package polus.ddns.net.rutortorrentsearch.data.model;
 
+import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
+import polus.ddns.net.rutortorrentsearch.data.vo.EntryTorrent;
 import polus.ddns.net.rutortorrentsearch.data.vo.EntrysFromSite;
 
 /**
@@ -10,4 +13,5 @@ import polus.ddns.net.rutortorrentsearch.data.vo.EntrysFromSite;
 
 public interface Strategy {
     List<EntrysFromSite> getEntrysFromSite(String searchString);
+    EntryTorrent getEntryFromUri(URI uri) throws IOException;
 }

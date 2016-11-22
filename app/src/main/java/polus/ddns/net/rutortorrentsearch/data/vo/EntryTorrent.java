@@ -19,6 +19,9 @@ public class EntryTorrent implements Serializable {
         this.linkTorrent = linkTorrent;
     }
 
+    public EntryTorrent() {
+    }
+
     public URI getImageUri() {
         return imageUri;
     }

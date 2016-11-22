@@ -14,6 +14,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import polus.ddns.net.rutortorrentsearch.data.vo.EntryTorrent;
 import polus.ddns.net.rutortorrentsearch.data.vo.EntrysFromSite;
 import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
 
@@ -38,7 +39,7 @@ public class RutorStrategy implements Strategy {
                 document = getDocument(searchString, i++);
                 elements.addAll(document.getElementsByClass("gai"));
                 elements.addAll(document.getElementsByClass("tum"));
-            } catch (IOException e) {
+            } catch (Exception e) {
                 break;
             }
             if (oldSize == elements.size()) break;
@@ -70,7 +71,14 @@ public class RutorStrategy implements Strategy {
         return siteList;
     }
 
-    protected Document getDocument(String searchString, int page) throws IOException {
+    @Override
+    public EntryTorrent getEntryFromUri(URI uri) throws IOException {
+        Document document = Jsoup.connect(uri.toString()).userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36").referrer("http://www.google.com").get();
+        Element details = document.getElementById("details") ;
+        return null;
+    }
+
+    private Document getDocument(String searchString, int page) throws IOException {
         String url = URI.create(String.format(Locale.getDefault(), URL_FORMAT, page, searchString)).toASCIIString();
         Document document = null;
         try {
