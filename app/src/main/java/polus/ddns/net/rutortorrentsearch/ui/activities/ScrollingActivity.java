@@ -46,6 +46,8 @@ public class ScrollingActivity extends BaseActivity {
     EditText editText;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +61,6 @@ public class ScrollingActivity extends BaseActivity {
 
         ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -123,7 +124,7 @@ public class ScrollingActivity extends BaseActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    private void runWithDelay() {
+    private void runWithDelay(int sec) {
         Log.d(TAG, "runWithDelay");
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -131,6 +132,6 @@ public class ScrollingActivity extends BaseActivity {
             public void run() {
                 hideProgress();
             }
-        }, 10000);
+        }, sec * 1000);
     }
 }
