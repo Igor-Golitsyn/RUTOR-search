@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.net.URI;
 
 import butterknife.BindView;
@@ -56,9 +55,11 @@ public class EntryActivity extends BaseActivity {
             uri = (URI) intent.getSerializableExtra(ConstantManager.ENTRY_LINK);
             try {
                 entryTorrent = rutor.getEntryFromUri(uri);
-            } catch (IOException e) {
+                if (entryTorrent == null) throw new Exception();
+            } catch (Exception e) {
                 showToast("Не удалось подключиться к серверу.");
                 finish();
+                entryTorrent=new EntryTorrent(URI.create(ConstantManager.LOGO_URI),"",URI.create(ConstantManager.LOGO_URI));
             }
         } else {
             uri = (URI) savedInstanceState.getSerializable(ConstantManager.ENTRY_LINK);
@@ -70,7 +71,7 @@ public class EntryActivity extends BaseActivity {
         if (entryTorrent.getText() == null) {
             entryTorrent.setText("");
         }
-        Picasso.with(this).load(entryTorrent.getImageUri().toString()).resize(480, 800).centerCrop().into(torrentImage);
+        Picasso.with(this).load(entryTorrent.getImageUri().toString()).into(torrentImage);
         torrentText.setText(entryTorrent.getText());
     }
 
