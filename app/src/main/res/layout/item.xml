@@ -1,55 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/spacing_tiny_4"
+    android:paddingBottom="@dimen/spacing_tiny_4">
 
-    <RelativeLayout
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/text_margin_16">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/card_name"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"/>
+            android:padding="@dimen/text_margin_16">
 
-        <TextView
-            android:id="@+id/card_seeders_statName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/card_name"
-            android:layout_marginTop="@dimen/spacing_tiny_4"
-            android:text="@string/cardSeeders"/>
+            <TextView
+                android:id="@+id/card_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"/>
 
-        <TextView
-            android:id="@+id/card_seeders"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/card_name"
-            android:layout_marginLeft="@dimen/spacing_small_10"
-            android:layout_marginTop="@dimen/spacing_tiny_4"
-            android:layout_toRightOf="@id/card_seeders_statName"/>
+            <TextView
+                android:id="@+id/card_seeders_statName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/card_name"
+                android:layout_marginTop="@dimen/spacing_tiny_4"
+                android:text="@string/cardSeeders"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/card_name"
-            android:layout_marginTop="@dimen/spacing_tiny_4"
-            android:layout_toLeftOf="@id/card_size"
-            android:text="@string/cardSize"/>
+            <TextView
+                android:id="@+id/card_seeders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/card_name"
+                android:layout_marginLeft="@dimen/spacing_small_10"
+                android:layout_marginTop="@dimen/spacing_tiny_4"
+                android:layout_toRightOf="@id/card_seeders_statName"/>
 
-        <TextView
-            android:id="@+id/card_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/card_name"
-            android:layout_marginLeft="@dimen/spacing_small_10"
-            android:layout_marginTop="@dimen/spacing_tiny_4"/>
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/card_name"
+                android:layout_marginTop="@dimen/spacing_tiny_4"
+                android:layout_toLeftOf="@id/card_size"
+                android:text="@string/cardSize"/>
 
-</android.support.v7.widget.CardView>
+            <TextView
+                android:id="@+id/card_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/card_name"
+                android:layout_marginLeft="@dimen/spacing_small_10"
+                android:layout_marginTop="@dimen/spacing_tiny_4"/>
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>
