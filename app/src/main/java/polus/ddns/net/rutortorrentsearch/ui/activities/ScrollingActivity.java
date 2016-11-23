@@ -1,5 +1,6 @@
 package polus.ddns.net.rutortorrentsearch.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import polus.ddns.net.rutortorrentsearch.data.model.RutorStrategy;
 import polus.ddns.net.rutortorrentsearch.data.model.Strategy;
 import polus.ddns.net.rutortorrentsearch.data.vo.EntrysFromSite;
 import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
+import polus.ddns.net.rutortorrentsearch.utils.NetworkUtils;
 import polus.ddns.net.rutortorrentsearch.utils.RecyclerItemClickListener;
 
 public class ScrollingActivity extends BaseActivity {
@@ -62,14 +64,19 @@ public class ScrollingActivity extends BaseActivity {
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
+        final Context context = this;
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Log.d(TAG, "onItemClick");
-                Intent intent = new Intent(ScrollingActivity.this, EntryActivity.class);
-                intent.putExtra(ConstantManager.ENTRY_LINK, siteList.get(position).getUri());
-                view.setBackgroundColor(Color.parseColor("#DBDBDB"));
-                startActivity(intent);
+                if (NetworkUtils.isNetworkAvailable(context)) {
+                    Intent intent = new Intent(ScrollingActivity.this, EntryActivity.class);
+                    intent.putExtra(ConstantManager.ENTRY_LINK, siteList.get(position).getUri());
+                    view.setBackgroundColor(Color.parseColor("#DBDBDB"));
+                    startActivity(intent);
+                } else {
+                    showToast("Отсутствует интернет соединение.");
+                }
             }
 
             @Override
@@ -97,11 +104,17 @@ public class ScrollingActivity extends BaseActivity {
     @OnClick(R.id.find_button)
     public void clickFindButton() {
         Log.d(TAG, "clickFindButton");
-        Strategy rutor = new RutorStrategy();
-        siteList = new ArrayList<>();
-        siteList.addAll(rutor.getEntrysFromSite(editText.getText().toString()));
-        showToast("Найдено: " + siteList.size());
-        initializeAdapter();
+        showProgress();
+        if (NetworkUtils.isNetworkAvailable(this)) {
+            Strategy rutor = new RutorStrategy();
+            siteList = new ArrayList<>();
+            siteList.addAll(rutor.getEntrysFromSite(editText.getText().toString()));
+            initializeAdapter();
+            showToast("Найдено: " + siteList.size());
+        } else {
+            showToast("Отсутствует интернет соединение.");
+        }
+        hideProgress();
     }
 
     private void initializeAdapter() {
@@ -111,12 +124,13 @@ public class ScrollingActivity extends BaseActivity {
     }
 
     private void runWithDelay() {
+        Log.d(TAG, "runWithDelay");
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                showProgress();
+                hideProgress();
             }
-        }, 1000);
+        }, 10000);
     }
 }

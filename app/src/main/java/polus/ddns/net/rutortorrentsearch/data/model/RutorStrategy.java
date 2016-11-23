@@ -127,8 +127,11 @@ public class RutorStrategy implements Strategy {
             } catch (Exception e) {
             }
         }
-        for (String s : data.keySet()) {
-            rezult = rezult.append(s + data.get(s) + "\n");
+        List<String> set = new ArrayList<>(data.keySet());
+        Collections.sort(set);
+        for (String s : set) {
+            String val = data.get(s).trim();
+            if (!val.isEmpty()) rezult = rezult.append(s + val + "\n");
         }
         return rezult.toString();
     }
