@@ -38,7 +38,6 @@
                 android:layout_marginLeft="@dimen/spacing_small_10"
                 android:layout_marginTop="@dimen/spacing_tiny_4"
                 android:layout_toRightOf="@id/card_seeders_statName"
-                android:text="32"
                 />
 
             <TextView
@@ -49,7 +48,7 @@
                 android:layout_below="@id/card_name"
                 android:layout_marginLeft="@dimen/spacing_small_10"
                 android:layout_marginTop="@dimen/spacing_tiny_4"
-                android:text="132"/>
+                />
 
             <TextView
                 android:layout_width="wrap_content"
