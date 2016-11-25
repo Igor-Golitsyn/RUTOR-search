@@ -105,33 +105,30 @@ public class ScrollingActivity extends BaseActivity {
     @OnClick(R.id.find_button)
     public void clickFindButton() {
         Log.d(TAG, "clickFindButton");
+        final Context context = this;
         showProgress();
-        if (NetworkUtils.isNetworkAvailable(this)) {
-            Strategy rutor = new RutorStrategy();
-            siteList = new ArrayList<>();
-            siteList.addAll(rutor.getEntrysFromSite(editText.getText().toString()));
-            initializeAdapter();
-            showToast("Найдено: " + siteList.size());
-        } else {
-            showToast("Отсутствует интернет соединение.");
-        }
-        hideProgress();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (NetworkUtils.isNetworkAvailable(context)) {
+                    Strategy rutor = new RutorStrategy();
+                    siteList = new ArrayList<>();
+                    siteList.addAll(rutor.getEntrysFromSite(editText.getText().toString()));
+                    hideProgress();
+                    initializeAdapter();
+                    showToast("Найдено: " + siteList.size());
+                } else {
+                    hideProgress();
+                    showToast("Отсутствует интернет соединение.");
+                }
+            }
+        }, 2000);
     }
 
     private void initializeAdapter() {
         Log.d(TAG, "initializeAdapter");
         RVAdapter adapter = new RVAdapter(siteList);
         recyclerView.setAdapter(adapter);
-    }
-
-    private void runWithDelay(int sec) {
-        Log.d(TAG, "runWithDelay");
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                hideProgress();
-            }
-        }, sec * 1000);
     }
 }

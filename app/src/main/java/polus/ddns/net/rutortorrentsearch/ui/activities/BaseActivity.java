@@ -46,4 +46,5 @@ public class BaseActivity extends AppCompatActivity {
         Log.d(TAG, "showToast");
         Toast.makeText(this, massage, Toast.LENGTH_LONG).show();
     }
+
 }
