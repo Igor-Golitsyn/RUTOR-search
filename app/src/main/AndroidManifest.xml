@@ -8,7 +8,7 @@
     <application
         android:name=".ui.activities.Global"
         android:allowBackup="true"
-        android:icon="@mipmap/sky_map"
+        android:icon="@mipmap/cydia"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
