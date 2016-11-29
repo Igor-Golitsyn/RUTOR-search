@@ -3,4 +3,5 @@
     <string name="cardSeeders">Раздающих:</string>
     <string name="cardSize">Размер:</string>
     <string name="torrent_button">Скачать torrent файл</string>
+    <string name="search_button">Поиск</string>
 </resources>
