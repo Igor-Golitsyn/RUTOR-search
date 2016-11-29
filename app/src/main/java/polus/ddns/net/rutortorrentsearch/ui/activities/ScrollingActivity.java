@@ -39,6 +39,8 @@ public class ScrollingActivity extends BaseActivity {
     ImageView rutorLogo;
     @BindView(R.id.find_button)
     Button searchButton;
+    /*@BindView(R.id.rezult_linear_layout)
+    LinearLayout rezultLinearLayout;*/
     @BindView(R.id.find_text)
     EditText editText;
     @BindView(R.id.recycler_view)
