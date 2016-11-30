@@ -40,6 +40,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedscroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/padding_medial_56"
@@ -80,5 +81,12 @@
             android:layout_weight="0.3"
             android:text="@string/search_button"/>
     </LinearLayout>
+    <TextView
+        android:id="@+id/found_rezults"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/padding_small_16"
+        android:paddingLeft="@dimen/padding_small_16"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>

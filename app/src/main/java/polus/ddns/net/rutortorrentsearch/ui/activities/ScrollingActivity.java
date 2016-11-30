@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,12 +15,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +46,10 @@ public class ScrollingActivity extends BaseActivity {
     EditText editText;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.nestedscroll_view)
+    NestedScrollView nestedScrollView;
+    @BindView(R.id.found_rezults)
+    TextView foundRezults;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -114,7 +121,8 @@ public class ScrollingActivity extends BaseActivity {
                     siteList.addAll(rutor.getEntrysFromSite(editText.getText().toString()));
                     hideProgress();
                     initializeAdapter();
-                    showToast("Найдено: " + siteList.size());
+                    nestedScrollView.fullScroll(View.FOCUS_UP);
+                    foundRezults.setText(String.format(Locale.getDefault(), ConstantManager.FOUND_REZULTS, siteList.size()));
                 } else {
                     hideProgress();
                     showToast("Отсутствует интернет соединение.");

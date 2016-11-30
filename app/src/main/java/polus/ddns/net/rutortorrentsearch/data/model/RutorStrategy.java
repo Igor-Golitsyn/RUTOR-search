@@ -85,7 +85,7 @@ public class RutorStrategy implements Strategy {
     }
 
     public EntryTorrent getEntryFromUri(URI mainUri) throws IOException {
-        Log.d(TAG, "getEntryFromUri" + "-----------" + mainUri);
+        Log.d(TAG, "getEntryFromUri " + mainUri);
         EntryTorrent entryTorrent = new EntryTorrent();
         Document document = Jsoup.connect(mainUri.toString()).userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36").referrer("http://www.google.com").get();
         Element details = document.getElementById("details");
