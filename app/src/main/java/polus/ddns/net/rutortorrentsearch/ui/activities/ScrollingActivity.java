@@ -69,6 +69,7 @@ public class ScrollingActivity extends BaseActivity {
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
+        recyclerView.setNestedScrollingEnabled(false);
         final Context context = this;
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
