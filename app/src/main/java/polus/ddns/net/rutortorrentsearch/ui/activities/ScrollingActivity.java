@@ -100,8 +100,8 @@ public class ScrollingActivity extends BaseActivity {
                     Strategy rutor = new RutorStrategy();
                     siteList = new ArrayList<>();
                     siteList.addAll(rutor.getStartEntrys());
-                    initializeAdapter();
                     foundRezults.setText(ConstantManager.START_REZULTS);
+                    initializeAdapter();
                 } else {
                     showToast(ConstantManager.INTERNET_OUT);
                 }
