@@ -57,9 +57,9 @@ public class EntryActivity extends BaseActivity {
                 entryTorrent = rutor.getEntryFromUri(uri);
                 if (entryTorrent == null) throw new Exception();
             } catch (Exception e) {
-                showToast("Не удалось подключиться к серверу.");
+                showToast(ConstantManager.SERVER_OUT);
                 finish();
-                entryTorrent=new EntryTorrent(URI.create(ConstantManager.LOGO_URI),"",URI.create(ConstantManager.LOGO_URI));
+                entryTorrent = new EntryTorrent(URI.create(ConstantManager.LOGO_URI), "", URI.create(ConstantManager.LOGO_URI));
             }
         } else {
             uri = (URI) savedInstanceState.getSerializable(ConstantManager.ENTRY_LINK);

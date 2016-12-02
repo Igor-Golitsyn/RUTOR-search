@@ -12,4 +12,7 @@ public interface ConstantManager {
     String ENTRY_IMAGE_LINK = "ENTRY_IMAGE_LINK";
     String ENTRY = "ENTRY";
     String FOUND_REZULTS = "Найдено раздач: %d";
+    String START_REZULTS = "Раздач за последние 24 часа";
+    String INTERNET_OUT = "Отсутствует интернет соединение";
+    String SERVER_OUT="Не удалось подключиться к серверу";
 }

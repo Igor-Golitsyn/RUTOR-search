@@ -13,5 +13,8 @@ import polus.ddns.net.rutortorrentsearch.data.vo.EntrysFromSite;
 
 public interface Strategy {
     List<EntrysFromSite> getEntrysFromSite(String searchString);
+
     EntryTorrent getEntryFromUri(URI uri) throws IOException;
+
+    List<EntrysFromSite> getStartEntrys() throws IOException;
 }

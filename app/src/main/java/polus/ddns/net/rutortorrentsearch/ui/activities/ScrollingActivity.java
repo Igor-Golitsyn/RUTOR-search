@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +82,7 @@ public class ScrollingActivity extends BaseActivity {
                     view.setBackgroundColor(Color.parseColor("#DBDBDB"));
                     startActivity(intent);
                 } else {
-                    showToast("Отсутствует интернет соединение.");
+                    showToast(ConstantManager.INTERNET_OUT);
                 }
             }
 
@@ -94,6 +95,19 @@ public class ScrollingActivity extends BaseActivity {
         Picasso.with(this).load(ConstantManager.LOGO_URI).fit().into(rutorLogo);
         if (savedInstanceState == null) {
             siteList = new ArrayList<>();
+            try {
+                if (NetworkUtils.isNetworkAvailable(context)) {
+                    Strategy rutor = new RutorStrategy();
+                    siteList = new ArrayList<>();
+                    siteList.addAll(rutor.getStartEntrys());
+                    initializeAdapter();
+                    foundRezults.setText(ConstantManager.START_REZULTS);
+                } else {
+                    showToast(ConstantManager.INTERNET_OUT);
+                }
+            } catch (IOException e) {
+                showToast(ConstantManager.SERVER_OUT);
+            }
         } else {
             siteList = (List<EntrysFromSite>) savedInstanceState.getSerializable(ConstantManager.SITE_LIST);
             initializeAdapter();
@@ -126,7 +140,7 @@ public class ScrollingActivity extends BaseActivity {
                     foundRezults.setText(String.format(Locale.getDefault(), ConstantManager.FOUND_REZULTS, siteList.size()));
                 } else {
                     hideProgress();
-                    showToast("Отсутствует интернет соединение.");
+                    showToast(ConstantManager.INTERNET_OUT);
                 }
             }
         }, 2000);
