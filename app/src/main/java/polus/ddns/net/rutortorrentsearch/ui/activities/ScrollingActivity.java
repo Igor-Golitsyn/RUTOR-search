@@ -147,10 +147,10 @@ public class ScrollingActivity extends BaseActivity {
                     Strategy rutor = new RutorStrategy();
                     siteList = new ArrayList<>();
                     siteList.addAll(rutor.getEntrysFromSite(editText.getText().toString()));
-                    hideProgress();
-                    initializeAdapter();
                     nestedScrollView.fullScroll(View.FOCUS_UP);
                     foundRezults.setText(String.format(Locale.getDefault(), ConstantManager.FOUND_REZULTS, siteList.size()));
+                    initializeAdapter();
+                    hideProgress();
                 } else {
                     hideProgress();
                     showToast(ConstantManager.INTERNET_OUT);
