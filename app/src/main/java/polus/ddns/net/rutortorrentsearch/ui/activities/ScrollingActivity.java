@@ -95,22 +95,33 @@ public class ScrollingActivity extends BaseActivity {
         Picasso.with(this).load(ConstantManager.LOGO_URI).fit().into(rutorLogo);
         if (savedInstanceState == null) {
             siteList = new ArrayList<>();
-            try {
-                if (NetworkUtils.isNetworkAvailable(context)) {
-                    Strategy rutor = new RutorStrategy();
-                    siteList = new ArrayList<>();
-                    siteList.addAll(rutor.getStartEntrys());
-                    foundRezults.setText(ConstantManager.START_REZULTS);
-                    initializeAdapter();
-                } else {
-                    showToast(ConstantManager.INTERNET_OUT);
+            showProgress();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        if (NetworkUtils.isNetworkAvailable(context)) {
+                            Strategy rutor = new RutorStrategy();
+                            siteList = new ArrayList<>();
+                            siteList.addAll(rutor.getStartEntrys());
+                            foundRezults.setText(ConstantManager.START_REZULTS);
+                            initializeAdapter();
+                            hideProgress();
+                        } else {
+                            hideProgress();
+                            showToast(ConstantManager.INTERNET_OUT);
+                        }
+                    } catch (IOException e) {
+                        hideProgress();
+                        showToast(ConstantManager.SERVER_OUT);
+                    }
                 }
-            } catch (IOException e) {
-                showToast(ConstantManager.SERVER_OUT);
-            }
+            }, 2000);
         } else {
             siteList = (List<EntrysFromSite>) savedInstanceState.getSerializable(ConstantManager.SITE_LIST);
             initializeAdapter();
+            hideProgress();
         }
     }
 
