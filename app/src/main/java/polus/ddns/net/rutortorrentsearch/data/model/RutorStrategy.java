@@ -28,6 +28,7 @@ public class RutorStrategy implements Strategy {
     static final String TAG = ConstantManager.TAG_PREFIX + "RutorStrategy";
     private static final String URL_FORMAT = "http://rutor.info/search/%d/0/000/0/%s";
     private static final String START_URL = "http://rutor.info";
+
     @Override
     public List<EntrysFromSite> getStartEntrys() throws IOException {
         Log.d(TAG, "getEntrysFromSite");
@@ -53,6 +54,7 @@ public class RutorStrategy implements Strategy {
         }
         return siteList;
     }
+
     @Override
     public List<EntrysFromSite> getEntrysFromSite(String searchString) {
         Log.d(TAG, "getEntrysFromSite");
