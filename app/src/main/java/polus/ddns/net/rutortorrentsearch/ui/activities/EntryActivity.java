@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import polus.ddns.net.rutortorrentsearch.R;
-import polus.ddns.net.rutortorrentsearch.data.model.RutorStrategy;
+import polus.ddns.net.rutortorrentsearch.data.model.rutor.RutorStrategy;
 import polus.ddns.net.rutortorrentsearch.data.model.Strategy;
 import polus.ddns.net.rutortorrentsearch.data.vo.EntryTorrent;
 import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
@@ -38,6 +38,8 @@ public class EntryActivity extends BaseActivity {
     TextView torrentText;
     @BindView(R.id.torrent_button)
     Button torrentButton;
+    @BindView(R.id.torrent_brauzer)
+    Button torrentBrauzer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +102,12 @@ public class EntryActivity extends BaseActivity {
     public void clickTorrentButton() {
         Log.d(TAG, "clickTorrentButton");
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(entryTorrent.getLinkTorrent().toString()));
+        startActivity(intent);
+    }
+    @OnClick(R.id.torrent_brauzer)
+    public void clickBrauzer(){
+        Log.d(TAG, "clickBrauzer");
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri.toString()));
         startActivity(intent);
     }
 }

@@ -16,5 +16,5 @@ public interface Strategy {
 
     EntryTorrent getEntryFromUri(URI uri) throws IOException;
 
-    List<EntrysFromSite> getStartEntrys() throws IOException;
+    List<EntrysFromSite> getStartEntrys();
 }

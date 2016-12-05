@@ -11,7 +11,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/profile_image_size_150"
+        android:layout_height="@dimen/profile_image_height"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -24,9 +24,9 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:id="@+id/rutor_logo"
+                android:id="@+id/wallpaper"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/profile_image_size_150"/>
+                android:layout_height="@dimen/profile_image_height"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

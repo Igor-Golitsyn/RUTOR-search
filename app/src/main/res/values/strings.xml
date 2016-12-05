@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">RUTOR torrent Search</string>
+    <string name="app_name">Торрент поиск</string>
     <string name="cardSeeders">Раздающих:</string>
     <string name="cardSize">Размер:</string>
     <string name="torrent_button">Скачать torrent файл</string>
+    <string name="torrent_brauzer">Открыть в браузере</string>
     <string name="search_button">Поиск</string>
 </resources>

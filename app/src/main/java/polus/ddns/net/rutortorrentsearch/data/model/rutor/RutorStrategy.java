@@ -1,4 +1,4 @@
-package polus.ddns.net.rutortorrentsearch.data.model;
+package polus.ddns.net.rutortorrentsearch.data.model.rutor;
 
 import android.util.Log;
 
@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import polus.ddns.net.rutortorrentsearch.data.model.Strategy;
 import polus.ddns.net.rutortorrentsearch.data.vo.EntryTorrent;
 import polus.ddns.net.rutortorrentsearch.data.vo.EntrysFromSite;
 import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
@@ -26,31 +27,33 @@ import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
 
 public class RutorStrategy implements Strategy {
     static final String TAG = ConstantManager.TAG_PREFIX + "RutorStrategy";
-    private static final String URL_FORMAT = "http://rutor.info/search/%d/0/000/0/%s";
-    private static final String START_URL = "http://rutor.info";
+    private static volatile String urlFormat;
 
     @Override
-    public List<EntrysFromSite> getStartEntrys() throws IOException {
+    public List<EntrysFromSite> getStartEntrys() {
         Log.d(TAG, "getEntrysFromSite");
         List<Element> elements = new ArrayList<>();
         List<EntrysFromSite> siteList = new ArrayList<>();
-        Document document = getStartDocument();
-        elements.addAll(document.getElementsByClass("gai"));
-        elements.addAll(document.getElementsByClass("tum"));
-        for (Element element : elements) {
-            try {
-                int sizeNode = element.childNodeSize();
-                String date = element.child(0).text();
-                String name = element.child(1).child(2).text();
-                String size = sizeNode < 7 ? element.child(2).text() : element.child(3).text();
-                URI uri = URI.create(element.child(1).child(2).absUrl("href"));
-                String seed = element.getElementsByClass("green").get(0).text();
-                seed = seed.substring(1, seed.length());
-                int seeders = Integer.parseInt(seed);
-                EntrysFromSite entrysFromSite = new EntrysFromSite(date, name, size, seeders, uri);
-                if (seeders > 0) siteList.add(entrysFromSite);
-            } catch (Exception e) {
+        try {
+            Document document = getStartDocument();
+            elements.addAll(document.getElementsByClass("gai"));
+            elements.addAll(document.getElementsByClass("tum"));
+            for (Element element : elements) {
+                try {
+                    int sizeNode = element.childNodeSize();
+                    String date = element.child(0).text();
+                    String name = element.child(1).child(2).text();
+                    String size = sizeNode < 7 ? element.child(2).text() : element.child(3).text();
+                    URI uri = URI.create(element.child(1).child(2).absUrl("href"));
+                    String seed = element.getElementsByClass("green").get(0).text();
+                    seed = seed.substring(1, seed.length());
+                    int seeders = Integer.parseInt(seed);
+                    EntrysFromSite entrysFromSite = new EntrysFromSite(date, name, size, seeders, uri);
+                    if (seeders > 0) siteList.add(entrysFromSite);
+                } catch (Exception e) {
+                }
             }
+        } catch (IOException e) {
         }
         return siteList;
     }
@@ -102,16 +105,22 @@ public class RutorStrategy implements Strategy {
 
     private Document getStartDocument() throws IOException {
         Log.d(TAG, "getStartDocument");
-        String url = URI.create(START_URL).toASCIIString();
-        Document document = Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36").referrer("http://www.google.com").get();
-        return document;
+        for (RutorMirrors mirrors : RutorMirrors.values()) {
+            String url = URI.create(mirrors.toString()).toASCIIString();
+            try {
+                Document document = Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36").referrer("http://www.google.com").get();
+                urlFormat = mirrors.toString() + "/search/%d/0/000/0/%s";
+                return document;
+            } catch (IOException e) {
+            }
+        }
+        throw new IOException();
     }
 
     private Document getDocument(String searchString, int page) throws IOException {
         Log.d(TAG, "getDocument");
-        String url = URI.create(String.format(Locale.getDefault(), URL_FORMAT, page, searchString)).toASCIIString();
+        String url = URI.create(String.format(Locale.getDefault(), urlFormat, page, searchString)).toASCIIString();
         Document document = Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36").referrer("http://www.google.com").get();
-        //document.html();
         return document;
     }
 

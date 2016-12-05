@@ -3,6 +3,7 @@ package polus.ddns.net.rutortorrentsearch.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -20,7 +21,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,18 +30,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import polus.ddns.net.rutortorrentsearch.R;
-import polus.ddns.net.rutortorrentsearch.data.model.RutorStrategy;
 import polus.ddns.net.rutortorrentsearch.data.model.Strategy;
+import polus.ddns.net.rutortorrentsearch.data.model.rutor.RutorStrategy;
 import polus.ddns.net.rutortorrentsearch.data.vo.EntrysFromSite;
 import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
 import polus.ddns.net.rutortorrentsearch.utils.NetworkUtils;
 import polus.ddns.net.rutortorrentsearch.utils.RecyclerItemClickListener;
+import polus.ddns.net.rutortorrentsearch.utils.WallpaperManager;
 
 public class ScrollingActivity extends BaseActivity {
     static final String TAG = ConstantManager.TAG_PREFIX + "ScrollingActivity";
     private List<EntrysFromSite> siteList;
-    @BindView(R.id.rutor_logo)
-    ImageView rutorLogo;
+    private Strategy rutor = new RutorStrategy();
+    private Uri wallpaperUri;
+    @BindView(R.id.wallpaper)
+    ImageView wallpaper;
     @BindView(R.id.find_button)
     Button searchButton;
     @BindView(R.id.find_text)
@@ -94,37 +97,35 @@ public class ScrollingActivity extends BaseActivity {
                 // do whatever
             }
         }));
-        Picasso.with(this).load(ConstantManager.LOGO_URI).fit().into(rutorLogo);
         if (savedInstanceState == null) {
+            wallpaperUri = WallpaperManager.getWallpaper();
             siteList = new ArrayList<>();
             showProgress();
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        if (NetworkUtils.isNetworkAvailable(context)) {
-                            Strategy rutor = new RutorStrategy();
-                            siteList = new ArrayList<>();
-                            siteList.addAll(rutor.getStartEntrys());
-                            foundRezults.setText(ConstantManager.START_REZULTS);
-                            initializeAdapter();
-                            hideProgress();
-                        } else {
-                            hideProgress();
-                            showToast(ConstantManager.INTERNET_OUT);
-                        }
-                    } catch (IOException e) {
+                    if (NetworkUtils.isNetworkAvailable(context)) {
+                        siteList = new ArrayList<>();
+                        siteList.addAll(rutor.getStartEntrys());
+                        foundRezults.setText(ConstantManager.START_REZULTS);
+                        initializeAdapter();
                         hideProgress();
-                        showToast(ConstantManager.SERVER_OUT);
+                    } else {
+                        hideProgress();
+                        showToast(ConstantManager.INTERNET_OUT);
                     }
                 }
             }, 2000);
         } else {
             siteList = (List<EntrysFromSite>) savedInstanceState.getSerializable(ConstantManager.SITE_LIST);
+            foundRezults.setText(savedInstanceState.getString(ConstantManager.FOUND_TEXT_VIEW));
+            wallpaperUri = savedInstanceState.getParcelable(ConstantManager.WALLPAPER_URI);
             initializeAdapter();
             hideProgress();
         }
+        Picasso.with(this).load(wallpaperUri).fit().centerCrop().into(wallpaper);
+
     }
 
     @Override
@@ -132,6 +133,8 @@ public class ScrollingActivity extends BaseActivity {
         super.onSaveInstanceState(outState);
         Log.d(TAG, "onSaveInstanceState");
         outState.putSerializable(ConstantManager.SITE_LIST, (Serializable) siteList);
+        outState.putString(ConstantManager.FOUND_TEXT_VIEW, foundRezults.getText().toString());
+        outState.putParcelable(ConstantManager.WALLPAPER_URI, wallpaperUri);
     }
 
     @OnClick(R.id.find_button)

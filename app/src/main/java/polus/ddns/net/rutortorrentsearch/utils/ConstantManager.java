@@ -14,5 +14,7 @@ public interface ConstantManager {
     String FOUND_REZULTS = "Найдено раздач: %d";
     String START_REZULTS = "Раздачи за последние 24 часа";
     String INTERNET_OUT = "Отсутствует интернет соединение";
-    String SERVER_OUT="Не удалось подключиться к серверу";
+    String SERVER_OUT = "Не удалось подключиться к серверу";
+    String FOUND_TEXT_VIEW = "FOUND_TEXT_VIEW";
+    String WALLPAPER_URI = "WALLPAPER_URI";
 }
