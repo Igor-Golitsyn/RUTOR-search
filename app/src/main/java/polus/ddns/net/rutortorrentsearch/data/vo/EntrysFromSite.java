@@ -1,14 +1,15 @@
 package polus.ddns.net.rutortorrentsearch.data.vo;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.net.URI;
 
 /**
  * Created by Игорь on 17.11.2016.
  */
 
-public class EntrysFromSite implements Serializable {
-    private static final long serialVersionUID = 0L;
+public class EntrysFromSite implements Parcelable {
     private String date;
     private String name;
     private String size;
@@ -22,6 +23,26 @@ public class EntrysFromSite implements Serializable {
         this.seeders = seeders;
         this.uri = uri;
     }
+
+    protected EntrysFromSite(Parcel in) {
+        date = in.readString();
+        name = in.readString();
+        size = in.readString();
+        seeders = in.readInt();
+        uri = URI.create(in.readString());
+    }
+
+    public static final Creator<EntrysFromSite> CREATOR = new Creator<EntrysFromSite>() {
+        @Override
+        public EntrysFromSite createFromParcel(Parcel in) {
+            return new EntrysFromSite(in);
+        }
+
+        @Override
+        public EntrysFromSite[] newArray(int size) {
+            return new EntrysFromSite[size];
+        }
+    };
 
     public void setDate(String date) {
         this.date = date;
@@ -78,5 +99,19 @@ public class EntrysFromSite implements Serializable {
                 ", name='" + name + '\'' +
                 ", uri=" + uri +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(date);
+        parcel.writeString(name);
+        parcel.writeString(size);
+        parcel.writeInt(seeders);
+        parcel.writeString(uri.toString());
     }
 }

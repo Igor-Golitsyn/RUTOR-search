@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.os.StrictMode;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,7 +22,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -118,7 +118,7 @@ public class ScrollingActivity extends BaseActivity {
                 }
             }, 2000);
         } else {
-            siteList = (List<EntrysFromSite>) savedInstanceState.getSerializable(ConstantManager.SITE_LIST);
+            siteList = savedInstanceState.getParcelableArrayList(ConstantManager.SITE_LIST);
             hideProgress();
             foundRezults.setText(savedInstanceState.getString(ConstantManager.FOUND_TEXT_VIEW));
             wallpaperUri = savedInstanceState.getParcelable(ConstantManager.WALLPAPER_URI);
@@ -132,9 +132,9 @@ public class ScrollingActivity extends BaseActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.d(TAG, "onSaveInstanceState");
-        outState.putSerializable(ConstantManager.SITE_LIST, (Serializable) siteList);
         outState.putString(ConstantManager.FOUND_TEXT_VIEW, foundRezults.getText().toString());
         outState.putParcelable(ConstantManager.WALLPAPER_URI, wallpaperUri);
+        outState.putParcelableArrayList(ConstantManager.SITE_LIST, (ArrayList<? extends Parcelable>) siteList);
     }
 
     @OnClick(R.id.find_button)
