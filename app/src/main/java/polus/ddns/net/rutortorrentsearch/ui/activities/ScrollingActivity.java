@@ -119,10 +119,10 @@ public class ScrollingActivity extends BaseActivity {
             }, 2000);
         } else {
             siteList = (List<EntrysFromSite>) savedInstanceState.getSerializable(ConstantManager.SITE_LIST);
+            hideProgress();
             foundRezults.setText(savedInstanceState.getString(ConstantManager.FOUND_TEXT_VIEW));
             wallpaperUri = savedInstanceState.getParcelable(ConstantManager.WALLPAPER_URI);
             initializeAdapter();
-            hideProgress();
         }
         Picasso.with(this).load(wallpaperUri).fit().centerCrop().into(wallpaper);
 
