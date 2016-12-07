@@ -1,4 +1,4 @@
-package polus.ddns.net.rutortorrentsearch.ui.activities;
+package polus.ddns.net.rutorsearch.ui.activities;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import polus.ddns.net.rutortorrentsearch.R;
-import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
+import polus.ddns.net.rutorsearch.R;
+import polus.ddns.net.rutorsearch.utils.ConstantManager;
 
 /**
  * Created by Игорь on 16.11.2016.

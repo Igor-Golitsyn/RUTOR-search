@@ -1,4 +1,4 @@
-package polus.ddns.net.rutortorrentsearch.ui.activities;
+package polus.ddns.net.rutorsearch.ui.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,8 +6,8 @@ import android.util.Log;
 import android.widget.TextView;
 
 import butterknife.BindView;
-import polus.ddns.net.rutortorrentsearch.R;
-import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
+import polus.ddns.net.rutorsearch.R;
+import polus.ddns.net.rutorsearch.utils.ConstantManager;
 
 /**
  * Created by Игорь on 18.11.2016.

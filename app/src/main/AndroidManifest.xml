@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="polus.ddns.net.rutortorrentsearch">
+          package="polus.ddns.net.rutorsearch">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
-        android:name=".ui.activities.Global"
+        android:name="polus.ddns.net.rutorsearch.ui.activities.Global"
         android:allowBackup="true"
         android:icon="@mipmap/pirate_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activities.ScrollingActivity"
+            android:name="polus.ddns.net.rutorsearch.ui.activities.ScrollingActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -22,10 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.CardViewActivity"/>
+        <activity android:name="polus.ddns.net.rutorsearch.ui.activities.CardViewActivity"/>
         <activity
-            android:name=".ui.activities.EntryActivity"
-            android:parentActivityName=".ui.activities.ScrollingActivity"
+            android:name="polus.ddns.net.rutorsearch.ui.activities.EntryActivity"
+            android:parentActivityName="polus.ddns.net.rutorsearch.ui.activities.ScrollingActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android:support.PARENT_ACTIVITY"

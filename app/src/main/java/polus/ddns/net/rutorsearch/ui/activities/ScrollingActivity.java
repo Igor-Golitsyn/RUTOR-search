@@ -1,9 +1,8 @@
-package polus.ddns.net.rutortorrentsearch.ui.activities;
+package polus.ddns.net.rutorsearch.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -20,8 +19,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -29,20 +26,18 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import polus.ddns.net.rutortorrentsearch.R;
-import polus.ddns.net.rutortorrentsearch.data.model.Strategy;
-import polus.ddns.net.rutortorrentsearch.data.model.rutor.RutorStrategy;
-import polus.ddns.net.rutortorrentsearch.data.vo.EntrysFromSite;
-import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
-import polus.ddns.net.rutortorrentsearch.utils.NetworkUtils;
-import polus.ddns.net.rutortorrentsearch.utils.RecyclerItemClickListener;
-import polus.ddns.net.rutortorrentsearch.utils.WallpaperManager;
+import polus.ddns.net.rutorsearch.R;
+import polus.ddns.net.rutorsearch.data.model.Strategy;
+import polus.ddns.net.rutorsearch.data.model.rutor.RutorStrategy;
+import polus.ddns.net.rutorsearch.data.vo.EntrysFromSite;
+import polus.ddns.net.rutorsearch.utils.ConstantManager;
+import polus.ddns.net.rutorsearch.utils.NetworkUtils;
+import polus.ddns.net.rutorsearch.utils.RecyclerItemClickListener;
 
 public class ScrollingActivity extends BaseActivity {
     static final String TAG = ConstantManager.TAG_PREFIX + "ScrollingActivity";
     private List<EntrysFromSite> siteList;
     private Strategy rutor = new RutorStrategy();
-    private Uri wallpaperUri;
     @BindView(R.id.wallpaper)
     ImageView wallpaper;
     @BindView(R.id.find_button)
@@ -98,7 +93,6 @@ public class ScrollingActivity extends BaseActivity {
             }
         }));
         if (savedInstanceState == null) {
-            wallpaperUri = WallpaperManager.getWallpaper();
             siteList = new ArrayList<>();
             showProgress();
             Handler handler = new Handler();
@@ -121,10 +115,9 @@ public class ScrollingActivity extends BaseActivity {
             siteList = savedInstanceState.getParcelableArrayList(ConstantManager.SITE_LIST);
             hideProgress();
             foundRezults.setText(savedInstanceState.getString(ConstantManager.FOUND_TEXT_VIEW));
-            wallpaperUri = savedInstanceState.getParcelable(ConstantManager.WALLPAPER_URI);
             initializeAdapter();
         }
-        Picasso.with(this).load(wallpaperUri).fit().centerCrop().into(wallpaper);
+        //Picasso.with(this).load().fit().centerCrop().into(wallpaper);
 
     }
 
@@ -133,7 +126,6 @@ public class ScrollingActivity extends BaseActivity {
         super.onSaveInstanceState(outState);
         Log.d(TAG, "onSaveInstanceState");
         outState.putString(ConstantManager.FOUND_TEXT_VIEW, foundRezults.getText().toString());
-        outState.putParcelable(ConstantManager.WALLPAPER_URI, wallpaperUri);
         outState.putParcelableArrayList(ConstantManager.SITE_LIST, (ArrayList<? extends Parcelable>) siteList);
     }
 

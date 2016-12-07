@@ -1,4 +1,4 @@
-package polus.ddns.net.rutortorrentsearch.data.vo;
+package polus.ddns.net.rutorsearch.data.vo;
 
 import android.os.Parcel;
 import android.os.Parcelable;

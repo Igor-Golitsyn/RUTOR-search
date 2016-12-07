@@ -12,12 +12,20 @@
                   android:orientation="vertical"
                   android:padding="@dimen/padding_small_16"
                   tools:context=".ui.activities.EntryActivity">
+        <TextView
+            android:id="@+id/entry_title"
+            android:gravity="center"
+            android:textSize="@dimen/font_larger_22"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"/>
 
         <ImageView
             android:id="@+id/torrent_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/entry_activity_image_height_400"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/torrent_text"

@@ -1,4 +1,4 @@
-package polus.ddns.net.rutortorrentsearch.data.model.rutor;
+package polus.ddns.net.rutorsearch.data.model.rutor;
 
 import android.util.Log;
 
@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import polus.ddns.net.rutortorrentsearch.data.model.Strategy;
-import polus.ddns.net.rutortorrentsearch.data.vo.EntryTorrent;
-import polus.ddns.net.rutortorrentsearch.data.vo.EntrysFromSite;
-import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
+import polus.ddns.net.rutorsearch.data.model.Strategy;
+import polus.ddns.net.rutorsearch.data.vo.EntryTorrent;
+import polus.ddns.net.rutorsearch.data.vo.EntrysFromSite;
+import polus.ddns.net.rutorsearch.utils.ConstantManager;
 
 /**
  * Created by Игорь on 17.11.2016.
@@ -131,9 +131,11 @@ public class RutorStrategy implements Strategy {
         Document document = Jsoup.connect(mainUri.toString()).userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36").referrer("http://www.google.com").get();
         Element details = document.getElementById("details");
         Element download = document.getElementById("download");
+        Element title=document.getElementsByTag("h1").first();
         entryTorrent.setImageUri(getImageUri(details));
         entryTorrent.setText(getText(details));
         entryTorrent.setLinkTorrent(getUriTorrentFile(download));
+        entryTorrent.setTitle(title.text());
         return entryTorrent;
     }
 

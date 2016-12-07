@@ -1,4 +1,4 @@
-package polus.ddns.net.rutortorrentsearch.utils;
+package polus.ddns.net.rutorsearch.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

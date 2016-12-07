@@ -1,4 +1,4 @@
-package polus.ddns.net.rutortorrentsearch.data.model.rutor;
+package polus.ddns.net.rutorsearch.data.model.rutor;
 
 /**
  * Created by Игорь on 05.12.2016.

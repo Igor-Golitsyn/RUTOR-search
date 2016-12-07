@@ -1,4 +1,4 @@
-package polus.ddns.net.rutortorrentsearch.ui.activities;
+package polus.ddns.net.rutorsearch.ui.activities;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import polus.ddns.net.rutortorrentsearch.R;
-import polus.ddns.net.rutortorrentsearch.data.vo.EntrysFromSite;
-import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
+import polus.ddns.net.rutorsearch.R;
+import polus.ddns.net.rutorsearch.data.vo.EntrysFromSite;
+import polus.ddns.net.rutorsearch.utils.ConstantManager;
 
 /**
  * Created by Игорь on 18.11.2016.

@@ -1,4 +1,4 @@
-package polus.ddns.net.rutortorrentsearch.data.vo;
+package polus.ddns.net.rutorsearch.data.vo;
 
 import java.io.Serializable;
 import java.net.URI;
@@ -12,6 +12,7 @@ public class EntryTorrent implements Serializable {
     private URI imageUri;
     private String text;
     private URI linkTorrent;
+    private String title;
 
     public EntryTorrent(URI imageUri, String text, URI linkTorrent) {
         this.imageUri = imageUri;
@@ -44,5 +45,13 @@ public class EntryTorrent implements Serializable {
 
     public void setLinkTorrent(URI linkTorrent) {
         this.linkTorrent = linkTorrent;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

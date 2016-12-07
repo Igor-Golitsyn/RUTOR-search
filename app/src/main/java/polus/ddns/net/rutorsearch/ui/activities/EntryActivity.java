@@ -1,4 +1,4 @@
-package polus.ddns.net.rutortorrentsearch.ui.activities;
+package polus.ddns.net.rutorsearch.ui.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,18 +10,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import java.net.URI;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import polus.ddns.net.rutortorrentsearch.R;
-import polus.ddns.net.rutortorrentsearch.data.model.rutor.RutorStrategy;
-import polus.ddns.net.rutortorrentsearch.data.model.Strategy;
-import polus.ddns.net.rutortorrentsearch.data.vo.EntryTorrent;
-import polus.ddns.net.rutortorrentsearch.utils.ConstantManager;
+import polus.ddns.net.rutorsearch.R;
+import polus.ddns.net.rutorsearch.data.model.Strategy;
+import polus.ddns.net.rutorsearch.data.model.rutor.RutorStrategy;
+import polus.ddns.net.rutorsearch.data.vo.EntryTorrent;
+import polus.ddns.net.rutorsearch.utils.ConstantManager;
 
 /**
  * Created by Игорь on 21.11.2016.
@@ -40,6 +38,8 @@ public class EntryActivity extends BaseActivity {
     Button torrentButton;
     @BindView(R.id.torrent_brauzer)
     Button torrentBrauzer;
+    @BindView(R.id.entry_title)
+    TextView title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,7 +73,8 @@ public class EntryActivity extends BaseActivity {
         if (entryTorrent.getText() == null) {
             entryTorrent.setText("");
         }
-        Picasso.with(this).load(entryTorrent.getImageUri().toString()).into(torrentImage);
+        //Picasso.with(this).load(entryTorrent.getImageUri().toString()).into(torrentImage);
+        title.setText(entryTorrent.getTitle());
         torrentText.setText(entryTorrent.getText());
     }
 

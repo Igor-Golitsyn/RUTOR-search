@@ -1,4 +1,4 @@
-package polus.ddns.net.rutortorrentsearch.ui.activities;
+package polus.ddns.net.rutorsearch.ui.activities;
 
 /**
  * Created by Игорь on 21.11.2016.
