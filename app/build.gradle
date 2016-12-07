@@ -5,7 +5,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "24.0.0"
     defaultConfig {
-        applicationId "polus.ddns.net.rutortorrentsearch"
+        applicationId "polus.ddns.net.rutorsearch"
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
