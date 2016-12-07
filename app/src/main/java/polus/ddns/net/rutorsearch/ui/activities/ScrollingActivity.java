@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -117,7 +119,7 @@ public class ScrollingActivity extends BaseActivity {
             foundRezults.setText(savedInstanceState.getString(ConstantManager.FOUND_TEXT_VIEW));
             initializeAdapter();
         }
-        //Picasso.with(this).load().fit().centerCrop().into(wallpaper);
+        Picasso.with(this).load(R.drawable.background).fit().centerCrop().into(wallpaper);
 
     }
 

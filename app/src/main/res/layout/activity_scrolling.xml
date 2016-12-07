@@ -26,7 +26,6 @@
             <ImageView
                 android:id="@+id/wallpaper"
                 android:layout_width="match_parent"
-                android:src="@drawable/ic_camera_black_100dp"
                 android:layout_height="@dimen/profile_image_height"/>
 
             <android.support.v7.widget.Toolbar
