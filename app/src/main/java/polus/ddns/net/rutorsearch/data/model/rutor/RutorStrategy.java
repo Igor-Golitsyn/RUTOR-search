@@ -120,7 +120,11 @@ public class RutorStrategy implements Strategy {
     private Document getDocument(String searchString, int page) throws IOException {
         Log.d(TAG, "getDocument");
         String url = URI.create(String.format(Locale.getDefault(), urlFormat, page, searchString)).toASCIIString();
+        System.out.println("*****************************************************************************************");
+        System.out.println(Locale.getDefault());
+        System.out.println(url);
         Document document = Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36").referrer("http://www.google.com").get();
+        System.out.println(document);
         return document;
     }
 
